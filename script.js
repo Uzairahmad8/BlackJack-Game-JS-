@@ -1,17 +1,45 @@
-let firstCard = 10;
-let secondCard = 4;
-let cards = [firstCard, secondCard];
-let sum = cards[0] + cards[1];
-let hasBlackJack = false;
-let isAlive = true;
-let message = "";
 
-let messageEl = document.getElementById('message-el');
-let sumEl = document.getElementById('sum');
-let cardsEl = document.getElementById('cards-el');
+let max;
+let min;
+let firstCard;
+let secondCard;
+let cards;
+let sum;
+let hasBlackJack;
+let isAlive
+let message;
+let messageEl;
+let cardsEl;
+let sumEl;
+
+function ready() {
+    // these are the cards from 2 - 11 (will need it to find random card)
+    min = 2;
+    max = 11;
+
+    firstCard = getRandomCard()
+    secondCard = getRandomCard()
+    cards = [firstCard, secondCard];
+    sum = cards[0] + cards[1];
+    hasBlackJack = false;
+    isAlive = true;
+    message = "";
+
+    messageEl = document.getElementById('message-el');
+    sumEl = document.getElementById('sum');
+    cardsEl = document.getElementById('cards-el');
+
+}
+
+
+
+function getRandomCard() {
+    return Math.floor(Math.random() * ( max - min ) + min )
+}
 
 
 function startGame() {
+    ready();
     renderGame();
 }
 
@@ -39,15 +67,21 @@ function renderGame() {
 
 
 function newCard() {
-    cards.push(5);
-    sum += 5;
-    renderGame();
+    let random = getRandomCard()
+    cards.push(random);
+    sum += random;
+
+    if (isAlive) {
+        renderGame();
+    }
+
+
 }
 
 
 function reset() {
     sum = 0;
-    cards = [0, 0];
+    cards = [];
     hasBlackJack = false;
     isAlive = true;
     messageEl.textContent = "Want to play a round?"
