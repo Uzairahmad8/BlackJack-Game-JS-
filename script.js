@@ -11,11 +11,15 @@ let message;
 let messageEl;
 let cardsEl;
 let sumEl;
+let playerEl;
+let player;
+let firstGame = true;
+let startBtn = document.getElementById('startBtn');
 
 function ready() {
     // these are the cards from 2 - 11 (will need it to find random card)
-    min = 2;
-    max = 11;
+    min = 1;
+    max = 13;
 
     firstCard = getRandomCard()
     secondCard = getRandomCard()
@@ -25,12 +29,16 @@ function ready() {
     isAlive = true;
     message = "";
 
+    player = {
+        name: "Uzair",
+        chips: 85
+    }
+
     messageEl = document.getElementById('message-el');
     sumEl = document.getElementById('sum');
     cardsEl = document.getElementById('cards-el');
-
+    playerEl = document.getElementById("player-el");
 }
-
 
 
 function getRandomCard() {
@@ -43,13 +51,17 @@ function getRandomCard() {
         return 10;
     }
 
+    return randomCard;
 }
 
 
 function startGame() {
     ready();
     renderGame();
+    startBtn.style.display = "none";
 }
+
+
 
 
 function renderGame() {
@@ -65,6 +77,7 @@ function renderGame() {
 
     messageEl.textContent = message;
     sumEl.textContent = "Sum: " + sum;
+    playerEl.textContent = player.name + ": $" + player.chips;
     
     cardsEl.textContent = "Cards: ";
     for (let i=0; i < cards.length; i++) {
@@ -75,26 +88,28 @@ function renderGame() {
 
 
 function newCard() {
-    
-
     if (isAlive && !hasBlackJack) { // blackJack === false && isAlive === true
         let random = getRandomCard()
         cards.push(random);
         sum += random;
         renderGame();
     }
-
-
 }
 
 
 function reset() {
     sum = 0;
     cards = [];
+    firstGame = true;
     hasBlackJack = false;
     isAlive = true;
     messageEl.textContent = "Want to play a round?"
     sumEl.textContent = "Sum: "
     cardsEl.textContent = "Cards: "
+    startBtn.style.display = "block";
 
+}
+
+if (sum === 0) {
+    startGame();
 }
