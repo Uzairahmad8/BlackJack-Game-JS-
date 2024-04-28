@@ -34,7 +34,15 @@ function ready() {
 
 
 function getRandomCard() {
-    return Math.floor(Math.random() * ( max - min ) + min )
+
+    let randomCard = Math.floor(Math.random() * ( max - min ) + min );
+
+    if (randomCard === 1) {
+        return 11;
+    } else if (randomCard >= 11) {
+        return 10;
+    }
+
 }
 
 
